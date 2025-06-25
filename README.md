@@ -1,5 +1,76 @@
 # IMU-data-acquisition-and-sensor-fusion
-This project involves acquiring motion data from an IMU and position data from a GPS module. An Extended Kalman Filter is used to fuse these sensor readings to improve accuracy. The fused output provides stable estimates of position, velocity, and direction for use in navigation systems.
+This project focuses on acquiring data from low-cost sensors — MPU9250 (IMU), HMC5883L (magnetometer), and NEO-6M (GPS) — and applying an Extended Kalman Filter (EKF) for sensor fusion. It aims to enhance motion tracking accuracy by overcoming individual sensor limitations such as drift (IMU) and signal loss (GPS).
+
 
 ![WhatsApp Image 2025-05-13 at 23 51 43_ce382a1a](https://github.com/user-attachments/assets/e75d70bf-0391-4017-872f-6ce5162dd92f)
+
+## Project Objective
+
+* Acquire real-time sensor data from MPU9250, HMC5883L, and NEO-6M
+* Calibrate the sensors to eliminate bias and offset
+* Implement EKF for fusing accelerometer, gyroscope, magnetometer, and GPS data
+* Estimate accurate position, velocity, and orientation in real-time
+
+## Hardware Components
+
+* MPU9250 – 3-axis accelerometer + 3-axis gyroscope
+* HMC5883L – 3-axis magnetometer
+* NEO-6M – GPS module
+* Raspberry Pi – for data acquisition and processing
+
+## Sensor Calibration
+
+To improve accuracy, sensors are calibrated before data fusion:
+
+* Accelerometer & Gyroscope: Offset is calculated using the average of 500 samples.
+* Magnetometer: Offset is derived by rotating the sensor in all directions and averaging the readings over 10 seconds.
+
+## Sensor Fusion (Extended Kalman Filter)
+
+An EKF is used to:
+
+* Predict the state (position, velocity, yaw) using IMU data
+* Correct the prediction using GPS measurements
+* Apply yaw correction using magnetometer data
+
+### State Vector
+
+* x, y – position
+* vx, vy – velocity
+* yaw – orientation angle
+
+### EKF Flow
+
+1. Read raw sensor values
+2. Convert GPS (latitude, longitude) to UTM (meters)
+3. Predict motion state from accelerometer and gyroscope
+4. Update the state with GPS data
+5. Apply yaw correction using magnetometer
+6. Save and export the filtered result
+
+## Output and Accuracy
+
+* Red Path – GPS logger path (phone)
+* Blue Path – Raw sensor path (MPU9250 + NEO-6M + HMC5883L)
+* Green Path – EKF output (filtered path)
+
+Average error between raw GPS and EKF output: **5.13 meters**
+
+## Dataset
+
+* Raw sensor data logs (CSV)
+* Filtered EKF output
+* GPS logger reference data
+
+## Applications
+
+* Real-time motion tracking for robots and autonomous vehicles
+* Precision agriculture and asset tracking
+* Drone localization in GPS-denied environments
+
+## Future Enhancements
+
+* Real-time implementation on microcontrollers
+* Integration with additional sensors like barometers or LiDAR
+* Adaptive filtering based on terrain and environment
 
