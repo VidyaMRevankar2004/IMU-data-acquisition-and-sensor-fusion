@@ -45,6 +45,9 @@ An EKF is used to:
 5. Apply yaw correction using magnetometer
 6. Save and export the filtered result
 
+<img width="239" alt="image" src="https://github.com/user-attachments/assets/32b8a3a1-a96a-4b50-89ee-15856e678cde" />
+
+
 ## Output and Accuracy
 
 * Red Path – GPS logger path (phone)
